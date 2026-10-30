@@ -3,167 +3,74 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#102b63">
+<meta name="theme-color" content="#090d18">
 <title>Wahlsimulation der FOS</title>
 <style>
-:root{--navy:#102b63;--blue:#2457d6;--sky:#eaf1ff;--yellow:#ffd447;--ink:#17233b;--muted:#61708b;--white:#fff;--line:#dce4f2;--green:#16794a}
-*{box-sizing:border-box}
-body{margin:0;background:#f4f7fc;color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.5}
-header{background:var(--navy);color:white;padding:18px 20px}
-.nav{max-width:980px;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:12px}
-.brand{font-weight:850;letter-spacing:-.03em;font-size:1.08rem}
-.badge{border:1px solid #ffffff66;border-radius:999px;padding:5px 10px;font-size:.76rem}
-main{max-width:860px;margin:0 auto;padding:28px 18px 56px}
-.hero{background:linear-gradient(135deg,#102b63,#2457d6);color:white;border-radius:26px;padding:clamp(25px,6vw,52px);position:relative;overflow:hidden}
-.eyebrow{font-weight:800;text-transform:uppercase;letter-spacing:.12em;font-size:.75rem;color:var(--yellow)}
-h1{font-size:clamp(2.1rem,7vw,4rem);line-height:1.02;letter-spacing:-.055em;margin:14px 0}
-.hero p{max-width:560px;color:#e5ecff;font-size:1.04rem}
-.btn{display:inline-flex;align-items:center;justify-content:center;border:0;border-radius:13px;padding:13px 19px;font-weight:800;font-size:1rem;cursor:pointer;text-decoration:none}
-.btn-primary{background:var(--yellow);color:#182443}
-.btn-secondary{background:white;color:var(--navy);border:1px solid var(--line)}
-.btn:disabled{opacity:.45;cursor:not-allowed}
-.section-title{font-size:1.4rem;letter-spacing:-.03em;margin:28px 0 12px}
-.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
-.info-card,.panel{background:white;border:1px solid var(--line);border-radius:18px;padding:18px}
-.info-card strong{display:block;margin-bottom:4px}
-.info-card p{font-size:.9rem;color:var(--muted);margin:0}
-.small{font-size:.88rem;color:var(--muted)}
-.note{background:#fff8d9;border:1px solid #f2dc7b;padding:14px 16px;border-radius:14px;font-size:.9rem;margin-top:18px}
-.hidden{display:none!important}
-.topline{display:flex;justify-content:space-between;gap:12px;color:var(--muted);font-size:.9rem;font-weight:700}
-.progress{height:8px;background:#e1e8f5;border-radius:99px;overflow:hidden;margin:10px 0 24px}
-.progress span{height:100%;display:block;width:0;background:var(--blue);transition:width .2s}
-.tag{display:inline-block;background:var(--sky);color:var(--blue);padding:5px 10px;border-radius:999px;font-size:.8rem;font-weight:800}
-.question{font-size:clamp(1.4rem,4vw,2rem);line-height:1.2;letter-spacing:-.035em;margin:16px 0 22px}
-.answers{display:grid;gap:10px}
-.answer{display:flex;gap:12px;align-items:center;width:100%;text-align:left;background:white;border:2px solid var(--line);border-radius:14px;padding:15px;cursor:pointer;font-size:1rem;color:var(--ink)}
-.answer:hover{border-color:#8da9ef}
-.answer.selected{border-color:var(--blue);background:var(--sky)}
-.answer .symbol{width:34px;height:34px;border-radius:10px;background:#edf1f8;display:grid;place-items:center;font-weight:900;flex-shrink:0}
-.answer.selected .symbol{background:var(--blue);color:white}
-.actions{display:flex;justify-content:space-between;gap:12px;margin-top:22px}
-.actions .btn{flex:1}
-.result-list{display:grid;gap:12px;margin:20px 0}
-.result-row{background:white;border:1px solid var(--line);padding:15px;border-radius:15px}
-.result-head{display:flex;justify-content:space-between;gap:12px;font-weight:800}
-.bar{height:10px;background:#e8edf6;border-radius:99px;overflow:hidden;margin-top:10px}
-.bar span{height:100%;display:block;background:var(--blue);border-radius:99px}
-footer{text-align:center;color:var(--muted);font-size:.82rem;padding:24px 10px}
-@media(max-width:620px){.grid{grid-template-columns:1fr}.nav{align-items:flex-start}.actions{flex-direction:column-reverse}.actions .btn{width:100%}.hero{border-radius:20px}}
+:root{--bg:#090d18;--panel:#111827;--panel2:#172235;--line:#29364c;--text:#f4f7fb;--muted:#aab6c8;--blue:#78a9ff;--cyan:#73e0df;--gold:#f4c96b;--radius:22px}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 15% 0%,#17294b 0,transparent 38%),radial-gradient(ellipse at 100% 30%,#102d37 0,transparent 32%),var(--bg);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;min-height:100vh}
+button{font:inherit;cursor:pointer}.wrap{width:min(980px,calc(100% - 32px));margin:auto;padding:28px 0 64px}.top{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:54px}.brand{display:flex;align-items:center;gap:12px;font-weight:750;letter-spacing:.01em}.mark{width:38px;height:38px;border-radius:12px;background:linear-gradient(135deg,var(--blue),var(--cyan));display:grid;place-items:center;color:#08111e;font-weight:900}.tag{color:var(--muted);font-size:.83rem;border:1px solid var(--line);padding:8px 12px;border-radius:999px}
+.hero{max-width:760px;margin:0 auto 28px;text-align:center}.eyebrow{color:var(--cyan);font-size:.78rem;font-weight:800;letter-spacing:.16em;text-transform:uppercase}.hero h1{font-size:clamp(2.5rem,7vw,5.2rem);line-height:.98;letter-spacing:-.055em;margin:18px 0}.hero h1 span{color:var(--blue)}.hero p{color:var(--muted);font-size:1.08rem;line-height:1.7;max-width:650px;margin:0 auto}
+.panel{background:linear-gradient(145deg,rgba(23,34,53,.96),rgba(15,23,38,.96));border:1px solid var(--line);border-radius:var(--radius);padding:clamp(22px,5vw,42px);box-shadow:0 24px 70px #0005}.startpanel{max-width:760px;margin:32px auto}.meta{display:flex;gap:10px;flex-wrap:wrap;margin:24px 0}.chip{font-size:.84rem;color:#d8e4f5;background:#1d2b41;border:1px solid #31435d;padding:8px 12px;border-radius:999px}
+.primary,.secondary,.answer{border:0;border-radius:14px;padding:15px 20px;font-weight:750;transition:.18s}.primary{background:linear-gradient(110deg,var(--blue),var(--cyan));color:#07111e;box-shadow:0 8px 28px #5daaff25}.primary:hover{transform:translateY(-2px);filter:brightness(1.06)}.secondary{background:#1a2639;border:1px solid var(--line);color:var(--text)}.primary:focus-visible,.secondary:focus-visible,.answer:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+.notice{border:1px solid #705c2e;background:#2a2417;color:#f5dfaa;padding:14px 16px;border-radius:14px;font-size:.9rem;line-height:1.55;margin-top:20px}
+.hidden{display:none!important}.progressrow{display:flex;justify-content:space-between;color:var(--muted);font-size:.9rem;margin-bottom:12px}.track{height:7px;background:#25334a;border-radius:99px;overflow:hidden;margin-bottom:28px}.fill{height:100%;width:0;background:linear-gradient(90deg,var(--blue),var(--cyan));transition:width .25s}
+.qcategory{color:var(--cyan);font-weight:800;text-transform:uppercase;letter-spacing:.13em;font-size:.75rem}.question{font-size:clamp(1.6rem,4vw,2.45rem);line-height:1.18;letter-spacing:-.035em;margin:14px 0 22px}.explain{background:#0d1728;border:1px solid #263954;border-radius:16px;padding:17px 18px;margin:20px 0 24px}.explain strong{display:flex;align-items:center;gap:8px;color:var(--blue);margin-bottom:8px}.explain p{color:#c2ccda;line-height:1.65;margin:0;font-size:.95rem}
+.answers{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.answer{background:#1a2940;border:1px solid #344863;color:var(--text);text-align:left;display:flex;align-items:center;gap:12px}.answer:hover{background:#243956;border-color:var(--blue)}.answer .dot{width:12px;height:12px;border:2px solid #8fa6c4;border-radius:50%;flex:none}.answer.selected{border-color:var(--cyan);background:#15343b}.answer.selected .dot{background:var(--cyan);border-color:var(--cyan)}.skip{margin-top:12px;color:var(--muted);background:transparent;border:0;padding:10px 0;text-decoration:underline;text-underline-offset:4px}
+.nav{display:flex;justify-content:space-between;gap:12px;margin-top:26px}
+.resulthead{text-align:center}.resulthead h2{font-size:clamp(2rem,5vw,3rem);margin:10px 0}.resulthead p{color:var(--muted);line-height:1.6}.emptyresults{margin-top:26px;background:#0d1728;border:1px solid #344863;border-radius:16px;padding:20px;line-height:1.65;color:#c8d3e2}.partygrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:20px}.party{padding:14px;background:#101b2c;border:1px solid var(--line);border-radius:14px;color:#dce6f4}.party small{display:block;color:var(--muted);margin-top:5px}
+footer{text-align:center;color:#78879d;font-size:.8rem;margin-top:32px;line-height:1.6}
+@media(max-width:600px){.top{margin-bottom:38px}.tag{font-size:.72rem}.answers,.partygrid{grid-template-columns:1fr}.nav button{flex:1}.wrap{width:min(100% - 22px,980px)}}
 </style>
 </head>
 <body>
-<header><div class="nav"><div class="brand">🗳️ Wahlsimulation der FOS</div><div class="badge">FOS Schwabach · Schulprojekt</div></div></header>
-<main>
-<section id="home">
-  <div class="hero">
-    <div class="eyebrow">Deine Meinung. Deine Stadt. Deine Wahl.</div>
-    <h1>Welche Partei passt zu deinen Vorstellungen?</h1>
-    <p>Beantworte politische Thesen rund um Schwabach und finde heraus, mit welchen Parteien deine Ansichten am ehesten übereinstimmen.</p>
-    <button class="btn btn-primary" id="startBtn">Wahl-O-Mat starten&nbsp; →</button>
-  </div>
-  <h2 class="section-title">So funktioniert's</h2>
-  <div class="grid">
-    <div class="info-card"><strong>01 · Thesen beantworten</strong><p>Du gibst an, ob du einer Aussage zustimmst, neutral bist oder sie ablehnst.</p></div>
-    <div class="info-card"><strong>02 · Positionen vergleichen</strong><p>Deine Antworten werden mit den dokumentierten Positionen der Parteien verglichen.</p></div>
-    <div class="info-card"><strong>03 · Ergebnis ansehen</strong><p>Du erhältst einen Überblick über deine Übereinstimmung mit den Parteien.</p></div>
-  </div>
-  <div class="note"><strong>Hinweis zum Prototyp:</strong> Diese erste Version ist eine technische Vorschau. Die Beispielthese und die Beispielpositionen sind Platzhalter und keine tatsächlichen Aussagen oder Positionen der Parteien. Bitte verwendet diese Version noch nicht für die Schulwahl.</div>
-  <p class="small">Deine Antworten werden in dieser Version nur während der Nutzung im Browser verarbeitet und nicht an einen Server gesendet.</p>
-</section>
+<div class="wrap">
+  <header class="top"><div class="brand"><div class="mark">W</div><span>WAHLSIMULATION <span style="color:var(--blue)">· FOS</span></span></div><div class="tag">Schwabach · Kommunalwahl 2026</div></header>
 
-<section id="quiz" class="hidden">
-  <div class="topline"><span id="stepLabel">These 1 von 6</span><span id="answeredLabel">0 beantwortet</span></div>
-  <div class="progress"><span id="progressBar"></span></div>
-  <div class="panel">
-    <span class="tag" id="topicTag">Jugend & Freizeit</span>
-    <h2 class="question" id="questionText"></h2>
-    <div class="answers" id="answers"></div>
-    <div class="actions">
-      <button class="btn btn-secondary" id="backBtn">← Zurück</button>
-      <button class="btn btn-primary" id="nextBtn" disabled>Weiter →</button>
-    </div>
-  </div>
-  <p class="small">Du kannst deine Antworten vor dem Ergebnis ändern. „These überspringen“ zählt nicht als Zustimmung oder Ablehnung.</p>
-</section>
+  <main>
+    <section id="home">
+      <div class="hero"><div class="eyebrow">Deine Meinung. Deine Stadt. Deine Wahl.</div><h1>Finde heraus,<br><span>was dir wichtig ist.</span></h1><p>Wie sollte sich Schwabach entwickeln? Beantworte kommunalpolitische Thesen und informiere dich über die Themen dahinter.</p></div>
+      <div class="panel startpanel"><h2 style="margin:0 0 10px;font-size:1.45rem">So funktioniert's</h2><p style="color:var(--muted);line-height:1.7;margin:0">Du bekommst nacheinander verschiedene Aussagen. Wähle aus, ob du zustimmst, neutral bist oder nicht zustimmst. Zu jeder These gibt es eine kurze Erklärung, damit du das Thema besser einordnen kannst.</p><div class="meta"><span class="chip">5 Beispielthesen</span><span class="chip">ca. 3–5 Minuten</span><span class="chip">ohne Anmeldung</span></div><button class="primary" onclick="startQuiz()">Simulation starten&nbsp; →</button><div class="notice"><strong>Hinweis zum aktuellen Stand:</strong> Diese Version ist ein technischer Prototyp. Die Thesen sind Beispiele. Die tatsächlichen Positionen der Parteien sind noch nicht vollständig eingetragen und geprüft. Deshalb wird noch kein Parteien-Matching angezeigt. Es werden keine Antworten an einen Server gesendet.</div></div>
+    </section>
 
-<section id="results" class="hidden">
-  <div class="hero">
-    <div class="eyebrow">Dein Ergebnis</div>
-    <h1>Das passt am ehesten zu dir.</h1>
-    <p>Die Liste zeigt, wie ähnlich deine Antworten den eingetragenen Parteipositionen sind.</p>
-  </div>
-  <div class="note"><strong>Prototyp-Ergebnis:</strong> Die Fragen und Parteipositionen auf dieser Seite sind nur Platzhalter. Prozentwerte sind daher nicht als echte Wahlempfehlung zu verstehen.</div>
-  <h2 class="section-title">Deine Übereinstimmung</h2>
-  <div id="resultList" class="result-list"></div>
-  <p class="small">Eine Übereinstimmung ist eine Orientierungshilfe, keine Wahlempfehlung. Informiere dich zusätzlich über Programme und Kandidierende.</p>
-  <button class="btn btn-primary" id="restartBtn">Nochmal starten ↻</button>
-</section>
-</main>
-<footer>Wahlsimulation der FOS · Schulprojekt · Neutral informieren, selbst entscheiden.</footer>
+    <section id="quiz" class="panel hidden">
+      <div class="progressrow"><span id="counter">These 1 von 5</span><span id="percent">20 %</span></div><div class="track"><div class="fill" id="progress"></div></div>
+      <div class="qcategory" id="category"></div><h2 class="question" id="thesis"></h2>
+      <div class="explain"><strong>ⓘ Worum geht es?</strong><p id="explanation"></p></div>
+      <div class="answers" id="answers">
+        <button class="answer" data-value="agree" onclick="choose('agree')"><span class="dot"></span> Stimme zu</button>
+        <button class="answer" data-value="neutral" onclick="choose('neutral')"><span class="dot"></span> Neutral</button>
+        <button class="answer" data-value="disagree" onclick="choose('disagree')"><span class="dot"></span> Stimme nicht zu</button>
+        <button class="answer" data-value="skip" onclick="choose('skip')"><span class="dot"></span> Überspringen</button>
+      </div>
+      <div class="nav"><button class="secondary" onclick="previousQuestion()">← Zurück</button><button class="primary" id="next" onclick="nextQuestion()">Weiter →</button></div>
+    </section>
+
+    <section id="results" class="panel hidden">
+      <div class="resulthead"><div class="eyebrow">Geschafft!</div><h2>Deine Antworten</h2><p>Du hast alle Beispielthesen durchlaufen. Deine Antworten bleiben nur in diesem Browserfenster.</p></div>
+      <div class="emptyresults"><strong>Die Parteiauswertung ist noch nicht freigeschaltet.</strong><br>Damit das Ergebnis fair und korrekt ist, müssen zuerst die belegten Positionen aller sechs Schwabacher Gruppen zu jeder These recherchiert und eingetragen werden. Wir zeigen bewusst keine erfundenen Übereinstimmungen.</div>
+      <div class="partygrid"><div class="party">CSU<small>Positionen werden ergänzt</small></div><div class="party">SPD<small>Positionen werden ergänzt</small></div><div class="party">Bündnis 90/Die Grünen<small>Positionen werden ergänzt</small></div><div class="party">AfD<small>Positionen werden ergänzt</small></div><div class="party">Freie Wähler<small>Positionen werden ergänzt</small></div><div class="party">Die Linke<small>Positionen werden ergänzt</small></div></div>
+      <div class="nav"><button class="secondary" onclick="showHome()">Zur Startseite</button><button class="primary" onclick="restart()">Nochmal starten ↻</button></div>
+    </section>
+  </main>
+  <footer>Ein schulisches Informationsprojekt der FOS Schwabach · Neutralität und nachvollziehbare Quellen sind wichtig.<br>Die Wahlsimulation ist keine Wahlempfehlung.</footer>
+</div>
 <script>
-/* PROTOTYP: Ersetze Beispielthesen und Parteipositionen erst nach Recherche.
-   Positionen: 1 = stimme zu, 0 = neutral/keine eindeutige Position, -1 = stimme nicht zu.
-   Die Platzhalterwerte unten sind absichtlich keine echten Parteipositionen. */
-const parties = ["CSU","SPD","Bündnis 90/Die Grünen","AfD","Freie Wähler","Die Linke"];
-const theses = [
- {topic:"Jugend & Freizeit",text:"Die Stadt sollte mehr Geld für kostenlose Freizeitangebote für Jugendliche bereitstellen.",positions:[1,1,1,-1,0,1]},
- {topic:"Verkehr",text:"Der öffentliche Nahverkehr in Schwabach sollte günstiger werden.",positions:[0,1,1,-1,0,1]},
- {topic:"Wohnen",text:"Die Stadt sollte sich stärker für bezahlbaren Wohnraum einsetzen.",positions:[0,1,1,0,0,1]},
- {topic:"Umwelt",text:"Schwabach sollte mehr Geld in Klimaschutz und Grünflächen investieren.",positions:[0,0,1,-1,0,1]},
- {topic:"Städtische Finanzen",text:"Bei neuen Projekten sollte die Stadt besonders darauf achten, Ausgaben zu begrenzen.",positions:[1,0,-1,1,1,-1]},
- {topic:"Mitbestimmung",text:"Jugendliche sollten bei kommunalen Entscheidungen stärker mitbestimmen können.",positions:[0,1,1,0,1,1]}
+const questions = [
+ {category:"Bildung & Schulen",thesis:"Die Stadt Schwabach sollte mehr Geld in die Modernisierung und Ausstattung ihrer Schulen investieren.",explanation:"Die Stadt ist für viele Gebäude und Teile der Ausstattung ihrer Schulen verantwortlich. Investitionen können zum Beispiel Klassenräume, digitale Geräte, Barrierefreiheit oder energetische Sanierungen betreffen. Dabei geht es auch darum, welche Projekte Vorrang haben und wie sie finanziert werden."},
+ {category:"Mobilität",thesis:"Der öffentliche Nahverkehr in Schwabach sollte ausgebaut werden, auch wenn dadurch höhere Kosten für die Stadt entstehen.",explanation:"Ein Ausbau kann mehr Verbindungen, bessere Taktzeiten oder zusätzliche Angebote am Abend und am Wochenende bedeuten. Die Stadt muss dabei Kosten, Nachfrage, Klimaschutz und die Erreichbarkeit verschiedener Stadtteile gegeneinander abwägen."},
+ {category:"Jugend & Freizeit",thesis:"Schwabach sollte mehr öffentliche Freizeit- und Begegnungsangebote für Jugendliche schaffen.",explanation:"Dazu können offene Treffpunkte, Sport- und Kulturangebote oder öffentliche Aufenthaltsorte gehören. Bei der Planung spielen geeignete Standorte, Betreuung, Finanzierung und die Beteiligung junger Menschen eine Rolle."},
+ {category:"Umwelt & Stadtentwicklung",thesis:"Bei neuen Bauprojekten sollte der Schutz von Grünflächen stärker berücksichtigt werden.",explanation:"Grünflächen können zur Erholung, zur Artenvielfalt und zu einem angenehmeren Stadtklima beitragen. Gleichzeitig besteht Bedarf an Wohnraum, Gewerbeflächen und Infrastruktur. Kommunale Planung muss diese Interessen abwägen."},
+ {category:"Wohnen",thesis:"Die Stadt Schwabach sollte den Bau von bezahlbarem Wohnraum stärker fördern.",explanation:"Bezahlbarer Wohnraum kann etwa durch kommunale Grundstückspolitik, Kooperationen mit Wohnungsunternehmen oder Vorgaben bei neuen Baugebieten unterstützt werden. Solche Maßnahmen haben finanzielle und planerische Auswirkungen."}
 ];
-const options = [
- {label:"Stimme zu",value:1,icon:"✓"},
- {label:"Neutral / unentschieden",value:0,icon:"="},
- {label:"Stimme nicht zu",value:-1,icon:"×"},
- {label:"These überspringen",value:null,icon:"↷"}
-];
-let answers = Array(theses.length).fill(undefined), index = 0;
-const $ = id => document.getElementById(id);
-function show(section){["home","quiz","results"].forEach(id=>$(id).classList.toggle("hidden",id!==section));window.scrollTo({top:0,behavior:"smooth"});}
-function renderQuestion(){
- const t=theses[index]; $("stepLabel").textContent=`These ${index+1} von ${theses.length}`;
- $("answeredLabel").textContent=`${answers.filter(v=>v!==undefined).length} beantwortet`;
- $("progressBar").style.width=`${(index/theses.length)*100}%`;
- $("topicTag").textContent=t.topic; $("questionText").textContent=t.text;
- $("answers").innerHTML="";
- options.forEach(o=>{
-   const b=document.createElement("button"); b.className="answer"+(answers[index]===o.value?" selected":""); b.type="button";
-   b.innerHTML=`<span class="symbol">${o.icon}</span><span>${o.label}</span>`;
-   b.addEventListener("click",()=>{answers[index]=o.value;renderQuestion();});
-   $("answers").appendChild(b);
- });
- $("backBtn").disabled=index===0;
- $("nextBtn").disabled=answers[index]===undefined;
- $("nextBtn").textContent=index===theses.length-1?"Ergebnis anzeigen →":"Weiter →";
- $("progressBar").style.width=`${(index/theses.length)*100}%`;
-}
-function scoreResults(){
- const scores=parties.map((party,p)=>{
-   let earned=0,possible=0;
-   theses.forEach((t,i)=>{
-     const a=answers[i]; if(a===undefined||a===null) return;
-     const pos=t.positions[p];
-     // Simple similarity: same stance=1, neutral-vs-position=0.5, opposite=0.
-     possible+=1;
-     earned += (a===pos)?1:((a===0||pos===0)?0.5:0);
-   });
-   return {party,score:possible?Math.round(earned/possible*100):0,possible};
- }).sort((a,b)=>b.score-a.score);
- $("resultList").innerHTML="";
- scores.forEach((r,i)=>{
-   const el=document.createElement("div");el.className="result-row";
-   el.innerHTML=`<div class="result-head"><span>${i+1}. ${r.party}</span><span>${r.possible?r.score+"%":"–"}</span></div><div class="bar"><span style="width:${r.possible?r.score:0}%"></span></div>`;
-   $("resultList").appendChild(el);
- });
- show("results");
-}
-$("startBtn").addEventListener("click",()=>{index=0;show("quiz");renderQuestion();});
-$("backBtn").addEventListener("click",()=>{if(index>0){index--;renderQuestion();}});
-$("nextBtn").addEventListener("click",()=>{if(answers[index]===undefined)return;if(index<theses.length-1){index++;renderQuestion();}else scoreResults();});
-$("restartBtn").addEventListener("click",()=>{answers=Array(theses.length).fill(undefined);index=0;show("home");});
+const parties=["CSU","SPD","Bündnis 90/Die Grünen","AfD","Freie Wähler","Die Linke"];
+let index=0, answers=Array(questions.length).fill(null);
+function startQuiz(){document.getElementById('home').classList.add('hidden');document.getElementById('results').classList.add('hidden');document.getElementById('quiz').classList.remove('hidden');index=0;renderQuestion()}
+function renderQuestion(){const q=questions[index];document.getElementById('counter').textContent=`These ${index+1} von ${questions.length}`;document.getElementById('percent').textContent=`${Math.round((index+1)/questions.length*100)} %`;document.getElementById('progress').style.width=`${(index+1)/questions.length*100}%`;document.getElementById('category').textContent=q.category;document.getElementById('thesis').textContent=q.thesis;document.getElementById('explanation').textContent=q.explanation;document.querySelectorAll('.answer').forEach(b=>b.classList.toggle('selected',b.dataset.value===answers[index]));document.getElementById('next').textContent=index===questions.length-1?'Auswertung ansehen →':'Weiter →'}
+function choose(value){answers[index]=value;renderQuestion()}
+function nextQuestion(){if(index<questions.length-1){index++;renderQuestion()}else{document.getElementById('quiz').classList.add('hidden');document.getElementById('results').classList.remove('hidden')}}
+function previousQuestion(){if(index>0){index--;renderQuestion()}else{showHome()}}
+function showHome(){document.getElementById('quiz').classList.add('hidden');document.getElementById('results').classList.add('hidden');document.getElementById('home').classList.remove('hidden')}
+function restart(){answers=Array(questions.length).fill(null);startQuiz()}
 </script>
 </body>
 </html>
