@@ -18,7 +18,7 @@ h1{font-size:clamp(40px,8vw,72px);line-height:1.02;letter-spacing:-.055em;margin
 .nav{display:flex;justify-content:space-between;gap:10px;margin-top:24px}.nav button{min-width:112px}.small{font-size:12px;color:var(--muted)}.section-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px;margin-top:22px}.section-card{background:#101a2a;border:1px solid var(--line);border-radius:15px;padding:16px}.section-card b{display:block}.section-card span{font-size:13px;color:var(--muted)}
 .summary-list{display:grid;gap:10px;margin-top:18px}.summary-item{display:grid;grid-template-columns:1fr auto;gap:12px;padding:14px;background:#0e1827;border:1px solid var(--line);border-radius:13px}.summary-item b{font-size:14px}.summary-item span{color:var(--accent);font-size:13px;text-align:right}
 .note{border-left:3px solid var(--accent);padding:9px 13px;background:#101e2b;color:var(--muted);font-size:13px;margin-top:20px}
-.percent-card{background:#101a2a;border:1px solid var(--line);border-radius:15px;padding:16px}.percent-head{display:flex;justify-content:space-between;gap:10px;font-weight:750}.bar{height:9px;background:#243248;border-radius:99px;overflow:hidden;margin-top:10px}.bar-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:99px}.party-link{display:block;padding:15px;background:#101a2a;border:1px solid var(--line);border-radius:13px;color:var(--text);text-decoration:none;font-weight:750}.party-link span{display:block;color:var(--muted);font-size:12px;font-weight:400;margin-top:4px}.party-link:hover{border-color:var(--accent)}footer{margin-top:38px;color:#718096;font-size:12px;text-align:center}
+.percent-card{background:#101a2a;border:1px solid var(--line);border-radius:15px;padding:16px}.percent-head{display:flex;justify-content:space-between;gap:10px;font-weight:750}.bar{height:9px;background:#243248;border-radius:99px;overflow:hidden;margin-top:10px}.bar-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:99px}.match-card{background:#101a2a;border:1px solid var(--line);border-radius:15px;padding:16px}.match-head{display:flex;justify-content:space-between;align-items:center;gap:10px;font-weight:800}.match-head strong{font-size:25px;color:var(--accent)}.match-sub{font-size:12px;color:var(--muted);margin-top:4px}.party-link{display:block;padding:15px;background:#101a2a;border:1px solid var(--line);border-radius:13px;color:var(--text);text-decoration:none;font-weight:750}.party-link span{display:block;color:var(--muted);font-size:12px;font-weight:400;margin-top:4px}.party-link:hover{border-color:var(--accent)}footer{margin-top:38px;color:#718096;font-size:12px;text-align:center}
 @media(max-width:560px){.top{margin-bottom:35px}.nav button{min-width:0;flex:1}.summary-item{grid-template-columns:1fr}.summary-item span{text-align:left}}
 </style>
 </head>
@@ -59,11 +59,11 @@ h1{font-size:clamp(40px,8vw,72px);line-height:1.02;letter-spacing:-.055em;margin
  <div class="eyebrow">GESCHAFFT</div><h2>Deine Antworten im Überblick.</h2>
  <p>Hier siehst du, wie du die 27 Thesen beantwortet hast. Es gibt keine richtige oder falsche Gesamtposition – entscheidend ist, welche Themen dir wichtig sind.</p>
  <div class="panel">
-  <div id="resultStats" class="section-grid"></div><h3 style="margin-top:28px">Deine Antworten in Prozent</h3><p class="small">Die Prozentwerte zeigen nur die Verteilung deiner eigenen Antworten – keine Übereinstimmung mit Parteien.</p><div id="answerPercentages" class="section-grid"></div><h3 style="margin-top:28px">Parteien und ihre Programme</h3><p>Hier findest du offizielle Informationsseiten zu den Parteien. Die Links führen zu den jeweiligen lokalen Seiten. Es werden bewusst keine persönlichen Partei-Empfehlungen oder unbelegten Übereinstimmungswerte berechnet.</p><div id="partyLinks" class="section-grid"></div>
+  <div id="resultStats" class="section-grid"></div><h3 style="margin-top:28px">Deine Antworten in Prozent</h3><p class="small">Die Werte zeigen die Verteilung deiner eigenen Antworten.</p><div id="answerPercentages" class="section-grid"></div><h3 style="margin-top:28px">Parteienvergleich</h3><p class="small">Prozentwerte werden nur aus eindeutig belegten lokalen Parteipositionen berechnet. Nicht belegte Positionen werden ausgelassen; die Zahl der gewerteten Thesen steht bei jedem Ergebnis.</p><div id="partyMatches" class="section-grid"></div><div class="note"><strong>WICHTIG: Diese Website dient ausschließlich der schulischen Wahlsimulation und politischen Bildung. Die Ergebnisse sind unverbindlich und keine Wahlempfehlung.</strong> Sie beruhen auf den verlinkten lokalen Parteiquellen. Bei geringer Quellenabdeckung ist ein Prozentwert nur eingeschränkt aussagekräftig.</div><details style="margin-top:18px"><summary style="cursor:pointer;font-weight:750">Parteiquellen und Berechnungsmethode</summary><div id="partyLinks" class="section-grid"></div><p class="small">Berechnung: Für jede gewertete These wird die Distanz zwischen deiner Antwort und der dokumentierten Parteiposition ermittelt. Je näher die Antworten liegen, desto höher der Punktwert. Nicht eindeutig belegte Parteipositionen werden nicht gewertet.</p></details>
   <div class="actions"><button class="primary" id="reviewBtn">Antworten ansehen</button><button class="secondary" id="restartBtn">Simulation erneut starten</button><button class="ghost" id="printBtn">Übersicht drucken</button></div>
  </div>
  <div id="summary" class="summary-list"></div>
- <div class="note"><strong>WICHTIGER HINWEIS: Dieses Ergebnis ist ausschließlich für die schulische Wahlsimulation gedacht. Es ist keine Wahlempfehlung und stellt keine offizielle Wahlinformation dar.</strong> Die Prozentwerte beziehen sich nur auf deine eigenen Antworten. Die verlinkten Parteiprogramme dienen dazu, Positionen selbst nachzulesen; ein persönlicher Parteien-Match wird nicht berechnet.</div>
+ <div class="note"><strong>WICHTIG: Diese Website dient ausschließlich der schulischen Wahlsimulation und politischen Bildung. Die Ergebnisse sind unverbindlich und keine Wahlempfehlung.</strong></div>
 </section>
 </main>
 <footer>Wahlsimulation der FOS · Schulisches Informationsprojekt · Keine offizielle Wahlinformation</footer>
@@ -110,54 +110,84 @@ function render(){
  $("prevBtn").disabled=index===0;$("prevBtn").style.opacity=index===0?".45":"1";$("nextBtn").textContent=index===questions.length-1?"Ergebnisse ansehen →":"Weiter →";$("nextBtn").disabled=!chosen[index];$("nextBtn").style.opacity=chosen[index]?"1":".45";
 }
 function start(){index=0;show("quiz");render();}
+
+// Nur lokal belegte Positionen werden bewertet.
+// Codes: 0 = Zustimmung, 1 = eher Zustimmung, 2 = eher Ablehnung, 3 = Ablehnung.
+// Nicht eindeutig belegte Positionen bleiben offen und werden nicht gewertet.
+const partyData = [
+ {name:"CSU",url:"https://www.csu-schwabach.de/",label:"Offizielle CSU-Seite Schwabach",positions:{}},
+ {name:"Freie Wähler",url:"https://www.fw-schwabach.de/unsere-politik-vor-ort/",label:"Ziele der Freien Wähler Schwabach",positions:{2:1,10:1,12:1,13:1,15:1,16:1,18:1,26:1}},
+ {name:"AfD",url:"https://www.afd-schwabach.de/",label:"Offizielle AfD-Seite Schwabach",positions:{}},
+ {name:"Bündnis 90/Die Grünen",url:"https://www.gruene-schwabach.de/wahlen/kommunalwahl-2026/wahlprogramm-2026",label:"Wahlprogramm Kommunalwahl 2026",positions:{7:0,8:0,9:0,10:0,12:0,13:0,14:0,15:1,20:0,21:0,24:0,26:0}},
+ {name:"SPD",url:"https://spd-schwabach.de/workspace/media/static/spd_zukunftsprogramm_kw2026-6979212168c64.pdf",label:"Zukunftsprogramm Schwabach 2026 (PDF)",positions:{0:1,2:1,9:0,11:1,15:1,17:1,18:1,20:1,21:1,24:0,26:0}},
+ {name:"Die Linke",url:"https://www.die-linke-schwabach-roth.de/kommunalwahlen-2026/",label:"Kommunalwahlprogramm Schwabach/Roth",positions:{3:0,4:0,5:1,8:0,9:0,11:0,18:0,19:0,20:0}}
+];
+function answerPosition(a){
+ if(a===answers[0]) return 0;
+ if(a===answers[1]) return 1;
+ if(a===answers[2]) return 2;
+ if(a===answers[3]) return 3;
+ if(a===answers[4]) return 1.5;
+ return null;
+}
+function scoreParty(p){
+ let sum=0,count=0;
+ questions.forEach((q,i)=>{
+   if(chosen[i]===undefined || p.positions[i]===undefined) return;
+   const u=answerPosition(chosen[i]), pos=p.positions[i];
+   if(u===null) return;
+   sum+=(1-Math.abs(u-pos)/3)*100; count++;
+ });
+ return {score:count?Math.round(sum/count):null,count};
+}
+
 function results(){
   show("results");
-  const answered = questions.filter((q,i)=>chosen[i] !== undefined).length;
-  $("resultStats").innerHTML =
-    `<div class="section-card"><b>${answered} / ${questions.length}</b><span>beantwortete Thesen</span></div>`+
-    `<div class="section-card"><b>${new Set(questions.map(q=>q.topic)).size}</b><span>Themenbereiche</span></div>`+
-    `<div class="section-card"><b>${questions.length-answered}</b><span>noch offen</span></div>`;
+  const answered=questions.filter((q,i)=>chosen[i]!==undefined).length;
+  $("resultStats").innerHTML=`<div class="section-card"><b>${answered} / ${questions.length}</b><span>beantwortete Thesen</span></div><div class="section-card"><b>${new Set(questions.map(q=>q.topic)).size}</b><span>Themenbereiche</span></div><div class="section-card"><b>${questions.length-answered}</b><span>noch offen</span></div>`;
 
-  const answerCounts = answers.map(a => ({
-    label:a,
-    count:questions.reduce((sum,q,i)=>sum+(chosen[i]===a?1:0),0)
-  }));
-  $("answerPercentages").innerHTML = "";
-  answerCounts.forEach(item=>{
-    const pct = answered ? Math.round(item.count/answered*100) : 0;
-    const card = document.createElement("div");
-    card.className = "percent-card";
-    card.innerHTML = `<div class="percent-head"><span></span><span>${pct}%</span></div><div class="bar"><div class="bar-fill" style="width:${pct}%"></div></div><p class="small" style="margin-bottom:0;margin-top:7px">${item.count} Antwort(en)</p>`;
-    card.querySelector(".percent-head span").textContent = item.label;
-    $("answerPercentages").appendChild(card);
+  $("answerPercentages").innerHTML="";
+  answers.forEach(a=>{
+    const count=questions.reduce((n,q,i)=>n+(chosen[i]===a?1:0),0);
+    const pct=answered?Math.round(count/answered*100):0;
+    const card=document.createElement("div");card.className="percent-card";
+    const head=document.createElement("div");head.className="percent-head";
+    const label=document.createElement("span");label.textContent=a;
+    const value=document.createElement("span");value.textContent=pct+"%";
+    head.append(label,value);
+    const bar=document.createElement("div");bar.className="bar";
+    const fill=document.createElement("div");fill.className="bar-fill";fill.style.width=pct+"%";bar.appendChild(fill);
+    const small=document.createElement("p");small.className="small";small.style.marginBottom="0";small.textContent=count+" Antwort(en)";
+    card.append(head,bar,small);$("answerPercentages").appendChild(card);
   });
 
-  const parties = [
-    ["CSU","https://www.csu-schwabach.de/","Offizielle lokale Parteiseite"],
-    ["Freie Wähler","https://www.fw-schwabach.de/unsere-politik-vor-ort/","Politik vor Ort"],
-    ["AfD","https://www.afd-schwabach.de/","Offizielle lokale Parteiseite"],
-    ["Bündnis 90/Die Grünen","https://www.gruene-schwabach.de/wahlen/kommunalwahl-2026/wahlprogramm-2026","Kommunalwahlprogramm 2026"],
-    ["SPD","https://spd-schwabach.de/news/schwabach-gemeinsam-stark-unser-zukunftsprogramm-zur-kommunalwahl-2026/","Zukunftsprogramm zur Kommunalwahl 2026"],
-    ["Die Linke","https://www.die-linke-schwabach-roth.de/kommunalwahlen-2026/","Informationen zur Kommunalwahl 2026"]
-  ];
-  $("partyLinks").innerHTML = "";
-  parties.forEach(([name,url,desc])=>{
-    const a = document.createElement("a");
-    a.className = "party-link";
-    a.href = url; a.target = "_blank"; a.rel = "noopener noreferrer";
-    a.innerHTML = `<span></span>`;
-    a.insertBefore(document.createTextNode(name),a.firstChild);
-    a.querySelector("span").textContent = desc + " ↗";
+  const ranked=partyData.map(p=>({...p,...scoreParty(p)})).sort((a,b)=>{
+    if(a.score===null)return 1;if(b.score===null)return -1;return b.score-a.score;
+  });
+  $("partyMatches").innerHTML="";
+  ranked.forEach(p=>{
+    const card=document.createElement("div");card.className="match-card";
+    const head=document.createElement("div");head.className="match-head";
+    const name=document.createElement("span");name.textContent=p.name;
+    const value=document.createElement("strong");value.textContent=p.score===null?"—":p.score+"%";
+    head.append(name,value);card.appendChild(head);
+    const sub=document.createElement("div");sub.className="match-sub";
+    sub.textContent=p.count?`${p.count} von ${answered} beantworteten Thesen gewertet`:"Noch keine ausreichend belegten Positionen hinterlegt";
+    card.appendChild(sub);
+    if(p.count){const bar=document.createElement("div");bar.className="bar";const fill=document.createElement("div");fill.className="bar-fill";fill.style.width=p.score+"%";bar.appendChild(fill);card.appendChild(bar);}
+    $("partyMatches").appendChild(card);
+  });
+
+  $("partyLinks").innerHTML="";
+  partyData.forEach(p=>{
+    const a=document.createElement("a");a.className="party-link";a.href=p.url;a.target="_blank";a.rel="noopener noreferrer";
+    a.appendChild(document.createTextNode(p.name));
+    const span=document.createElement("span");span.textContent=p.label+" ↗";a.appendChild(span);
     $("partyLinks").appendChild(a);
   });
 
-  $("summary").innerHTML = "";
-  questions.forEach((q,i)=>{
-    const d=document.createElement("div"); d.className="summary-item";
-    const b=document.createElement("b"); b.textContent=`${i+1}. ${q.q}`;
-    const s=document.createElement("span"); s.textContent=chosen[i]||"Nicht beantwortet";
-    d.append(b,s); $("summary").appendChild(d);
-  });
+  $("summary").innerHTML="";
+  questions.forEach((q,i)=>{const d=document.createElement("div");d.className="summary-item";const b=document.createElement("b");b.textContent=`${i+1}. ${q.q}`;const s=document.createElement("span");s.textContent=chosen[i]||"Nicht beantwortet";d.append(b,s);$("summary").appendChild(d);});
 }
 $("startBtn").onclick=start;$("prevBtn").onclick=()=>{if(index>0){index--;render();}};$("nextBtn").onclick=()=>{if(!chosen[index])return;if(index<questions.length-1){index++;render();}else results();};
 $("restartBtn").onclick=()=>{index=0;show("quiz");render();};$("reviewBtn").onclick=()=>{index=0;show("quiz");render();};$("printBtn").onclick=()=>window.print();
