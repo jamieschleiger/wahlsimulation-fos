@@ -18,7 +18,7 @@ h1{font-size:clamp(40px,8vw,72px);line-height:1.02;letter-spacing:-.055em;margin
 .nav{display:flex;justify-content:space-between;gap:10px;margin-top:24px}.nav button{min-width:112px}.small{font-size:12px;color:var(--muted)}.section-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px;margin-top:22px}.section-card{background:#101a2a;border:1px solid var(--line);border-radius:15px;padding:16px}.section-card b{display:block}.section-card span{font-size:13px;color:var(--muted)}
 .summary-list{display:grid;gap:10px;margin-top:18px}.summary-item{display:grid;grid-template-columns:1fr auto;gap:12px;padding:14px;background:#0e1827;border:1px solid var(--line);border-radius:13px}.summary-item b{font-size:14px}.summary-item span{color:var(--accent);font-size:13px;text-align:right}
 .note{border-left:3px solid var(--accent);padding:9px 13px;background:#101e2b;color:var(--muted);font-size:13px;margin-top:20px}
-footer{margin-top:38px;color:#718096;font-size:12px;text-align:center}
+.percent-card{background:#101a2a;border:1px solid var(--line);border-radius:15px;padding:16px}.percent-head{display:flex;justify-content:space-between;gap:10px;font-weight:750}.bar{height:9px;background:#243248;border-radius:99px;overflow:hidden;margin-top:10px}.bar-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:99px}.party-link{display:block;padding:15px;background:#101a2a;border:1px solid var(--line);border-radius:13px;color:var(--text);text-decoration:none;font-weight:750}.party-link span{display:block;color:var(--muted);font-size:12px;font-weight:400;margin-top:4px}.party-link:hover{border-color:var(--accent)}footer{margin-top:38px;color:#718096;font-size:12px;text-align:center}
 @media(max-width:560px){.top{margin-bottom:35px}.nav button{min-width:0;flex:1}.summary-item{grid-template-columns:1fr}.summary-item span{text-align:left}}
 </style>
 </head>
@@ -38,7 +38,7 @@ footer{margin-top:38px;color:#718096;font-size:12px;text-align:center}
    <div class="section-card"><b>Ca. 10–15 Minuten</b><span>Du bestimmst dein Tempo</span></div>
    <div class="section-card"><b>Deine Antworten bleiben lokal</b><span>Speicherung nur in diesem Browser</span></div>
   </div>
-  <div class="note">Hinweis: Diese Simulation ist ein schulisches Informationsangebot. Sie erstellt keine Wahlempfehlung und berechnet keine Übereinstimmung mit Parteien. Die Fragen sind Diskussionsanregungen und keine offiziellen Wahlversprechen.</div>
+  <div class="note"><strong>WICHTIGER HINWEIS: Diese Website dient ausschließlich einer schulischen Wahlsimulation und der politischen Bildung. Sie ist keine Wahlempfehlung. Die Thesen sind Diskussionsanregungen und keine offiziellen Wahlversprechen.</strong></div>
   <div class="actions"><button class="primary" id="startBtn">Simulation starten <span aria-hidden="true">→</span></button><button class="ghost" id="resetStart">Antworten zurücksetzen</button></div>
  </div>
 </section>
@@ -59,11 +59,11 @@ footer{margin-top:38px;color:#718096;font-size:12px;text-align:center}
  <div class="eyebrow">GESCHAFFT</div><h2>Deine Antworten im Überblick.</h2>
  <p>Hier siehst du, wie du die 27 Thesen beantwortet hast. Es gibt keine richtige oder falsche Gesamtposition – entscheidend ist, welche Themen dir wichtig sind.</p>
  <div class="panel">
-  <div id="resultStats" class="section-grid"></div>
+  <div id="resultStats" class="section-grid"></div><h3 style="margin-top:28px">Deine Antworten in Prozent</h3><p class="small">Die Prozentwerte zeigen nur die Verteilung deiner eigenen Antworten – keine Übereinstimmung mit Parteien.</p><div id="answerPercentages" class="section-grid"></div><h3 style="margin-top:28px">Parteien und ihre Programme</h3><p>Hier findest du offizielle Informationsseiten zu den Parteien. Die Links führen zu den jeweiligen lokalen Seiten. Es werden bewusst keine persönlichen Partei-Empfehlungen oder unbelegten Übereinstimmungswerte berechnet.</p><div id="partyLinks" class="section-grid"></div>
   <div class="actions"><button class="primary" id="reviewBtn">Antworten ansehen</button><button class="secondary" id="restartBtn">Simulation erneut starten</button><button class="ghost" id="printBtn">Übersicht drucken</button></div>
  </div>
  <div id="summary" class="summary-list"></div>
- <div class="note">Diese Übersicht zeigt ausschließlich deine eigenen Antworten. Sie ist keine Wahlempfehlung und vergleicht dich nicht mit Parteien oder Kandidierenden.</div>
+ <div class="note"><strong>WICHTIGER HINWEIS: Dieses Ergebnis ist ausschließlich für die schulische Wahlsimulation gedacht. Es ist keine Wahlempfehlung und stellt keine offizielle Wahlinformation dar.</strong> Die Prozentwerte beziehen sich nur auf deine eigenen Antworten. Die verlinkten Parteiprogramme dienen dazu, Positionen selbst nachzulesen; ein persönlicher Parteien-Match wird nicht berechnet.</div>
 </section>
 </main>
 <footer>Wahlsimulation der FOS · Schulisches Informationsprojekt · Keine offizielle Wahlinformation</footer>
@@ -111,10 +111,53 @@ function render(){
 }
 function start(){index=0;show("quiz");render();}
 function results(){
- show("results");const answered=Object.keys(chosen).length;
- $("resultStats").innerHTML=`<div class="section-card"><b>${answered} / 27</b><span>beantwortete Thesen</span></div><div class="section-card"><b>${new Set(questions.map(q=>q.topic)).size}</b><span>Themenbereiche</span></div><div class="section-card"><b>${27-answered}</b><span>noch offen</span></div>`;
- $("summary").innerHTML="";
- questions.forEach((q,i)=>{const d=document.createElement("div");d.className="summary-item";const b=document.createElement("b");b.textContent=`${i+1}. ${q.q}`;const s=document.createElement("span");s.textContent=chosen[i]||"Nicht beantwortet";d.append(b,s);$("summary").appendChild(d);});
+  show("results");
+  const answered = questions.filter((q,i)=>chosen[i] !== undefined).length;
+  $("resultStats").innerHTML =
+    `<div class="section-card"><b>${answered} / ${questions.length}</b><span>beantwortete Thesen</span></div>`+
+    `<div class="section-card"><b>${new Set(questions.map(q=>q.topic)).size}</b><span>Themenbereiche</span></div>`+
+    `<div class="section-card"><b>${questions.length-answered}</b><span>noch offen</span></div>`;
+
+  const answerCounts = answers.map(a => ({
+    label:a,
+    count:questions.reduce((sum,q,i)=>sum+(chosen[i]===a?1:0),0)
+  }));
+  $("answerPercentages").innerHTML = "";
+  answerCounts.forEach(item=>{
+    const pct = answered ? Math.round(item.count/answered*100) : 0;
+    const card = document.createElement("div");
+    card.className = "percent-card";
+    card.innerHTML = `<div class="percent-head"><span></span><span>${pct}%</span></div><div class="bar"><div class="bar-fill" style="width:${pct}%"></div></div><p class="small" style="margin-bottom:0;margin-top:7px">${item.count} Antwort(en)</p>`;
+    card.querySelector(".percent-head span").textContent = item.label;
+    $("answerPercentages").appendChild(card);
+  });
+
+  const parties = [
+    ["CSU","https://www.csu-schwabach.de/","Offizielle lokale Parteiseite"],
+    ["Freie Wähler","https://www.fw-schwabach.de/unsere-politik-vor-ort/","Politik vor Ort"],
+    ["AfD","https://www.afd-schwabach.de/","Offizielle lokale Parteiseite"],
+    ["Bündnis 90/Die Grünen","https://www.gruene-schwabach.de/wahlen/kommunalwahl-2026/wahlprogramm-2026","Kommunalwahlprogramm 2026"],
+    ["SPD","https://spd-schwabach.de/news/schwabach-gemeinsam-stark-unser-zukunftsprogramm-zur-kommunalwahl-2026/","Zukunftsprogramm zur Kommunalwahl 2026"],
+    ["Die Linke","https://www.die-linke-schwabach-roth.de/kommunalwahlen-2026/","Informationen zur Kommunalwahl 2026"]
+  ];
+  $("partyLinks").innerHTML = "";
+  parties.forEach(([name,url,desc])=>{
+    const a = document.createElement("a");
+    a.className = "party-link";
+    a.href = url; a.target = "_blank"; a.rel = "noopener noreferrer";
+    a.innerHTML = `<span></span>`;
+    a.insertBefore(document.createTextNode(name),a.firstChild);
+    a.querySelector("span").textContent = desc + " ↗";
+    $("partyLinks").appendChild(a);
+  });
+
+  $("summary").innerHTML = "";
+  questions.forEach((q,i)=>{
+    const d=document.createElement("div"); d.className="summary-item";
+    const b=document.createElement("b"); b.textContent=`${i+1}. ${q.q}`;
+    const s=document.createElement("span"); s.textContent=chosen[i]||"Nicht beantwortet";
+    d.append(b,s); $("summary").appendChild(d);
+  });
 }
 $("startBtn").onclick=start;$("prevBtn").onclick=()=>{if(index>0){index--;render();}};$("nextBtn").onclick=()=>{if(!chosen[index])return;if(index<questions.length-1){index++;render();}else results();};
 $("restartBtn").onclick=()=>{index=0;show("quiz");render();};$("reviewBtn").onclick=()=>{index=0;show("quiz");render();};$("printBtn").onclick=()=>window.print();
