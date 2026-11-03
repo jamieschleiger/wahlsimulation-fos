@@ -57,9 +57,9 @@ h1{font-size:clamp(40px,8vw,72px);line-height:1.02;letter-spacing:-.055em;margin
 </section>
 <section id="results" class="hidden">
  <div class="eyebrow">GESCHAFFT</div><h2>Deine Antworten im Überblick.</h2>
- <p>Hier siehst du, wie du die 27 Thesen beantwortet hast. Es gibt keine richtige oder falsche Gesamtposition – entscheidend ist, welche Themen dir wichtig sind.</p>
+ <p>Hier siehst du, wie stark deine Antworten mit den dokumentierten Positionen der Schwabacher Parteien übereinstimmen. Die Parteien werden nach deiner prozentualen Übereinstimmung sortiert.</p>
  <div class="panel">
-  <div id="resultStats" class="section-grid"></div><h3 style="margin-top:28px">Deine Antworten in Prozent</h3><p class="small">Die Werte zeigen die Verteilung deiner eigenen Antworten.</p><div id="answerPercentages" class="section-grid"></div><h3 style="margin-top:28px">Parteienvergleich</h3><p class="small">Prozentwerte werden nur aus eindeutig belegten lokalen Parteipositionen berechnet. Nicht belegte Positionen werden ausgelassen; die Zahl der gewerteten Thesen steht bei jedem Ergebnis.</p><div id="partyMatches" class="section-grid"></div><div class="note"><strong>WICHTIG: Diese Website dient ausschließlich der schulischen Wahlsimulation und politischen Bildung. Die Ergebnisse sind unverbindlich und keine Wahlempfehlung.</strong> Sie beruhen auf den verlinkten lokalen Parteiquellen. Bei geringer Quellenabdeckung ist ein Prozentwert nur eingeschränkt aussagekräftig.</div><details style="margin-top:18px"><summary style="cursor:pointer;font-weight:750">Parteiquellen und Berechnungsmethode</summary><div id="partyLinks" class="section-grid"></div><p class="small">Berechnung: Für jede gewertete These wird die Distanz zwischen deiner Antwort und der dokumentierten Parteiposition ermittelt. Je näher die Antworten liegen, desto höher der Punktwert. Nicht eindeutig belegte Parteipositionen werden nicht gewertet.</p></details>
+  <div id="resultStats" class="section-grid"></div><h3 style="margin-top:28px">Deine Übereinstimmung mit den Parteien</h3><p class="small">Die Prozentzahl zeigt, wie gut deine Antworten zu den dokumentierten Positionen der jeweiligen Partei passen. Nicht belegte Positionen und neutrale Antworten werden nicht gewertet. Die Anzahl der verglichenen Thesen wird bei jedem Ergebnis angezeigt.</p><div id="partyMatches" class="section-grid"></div><div class="note"><strong>WICHTIG: Diese Website dient ausschließlich der schulischen Wahlsimulation und politischen Bildung. Die Ergebnisse sind unverbindlich und keine Wahlempfehlung.</strong> Sie beruhen auf den verlinkten lokalen Parteiquellen. Bei geringer Quellenabdeckung ist ein Prozentwert nur eingeschränkt aussagekräftig.</div><details style="margin-top:18px"><summary style="cursor:pointer;font-weight:750">Parteiquellen und Berechnungsmethode</summary><div id="partyLinks" class="section-grid"></div><p class="small">Berechnung: Für jede These mit eigener Antwort und eindeutig dokumentierter Parteiposition wird die Übereinstimmung anhand des Abstands auf der vierstufigen Antwortskala berechnet. Neutrale Antworten sowie nicht belegte Parteipositionen werden ausgelassen. Die Prozentwerte sind nur so aussagekräftig wie die Zahl der verglichenen Thesen.</p></details>
   <div class="actions"><button class="primary" id="reviewBtn">Antworten ansehen</button><button class="secondary" id="restartBtn">Simulation erneut starten</button><button class="ghost" id="printBtn">Übersicht drucken</button></div>
  </div>
  <div id="summary" class="summary-list"></div>
@@ -142,52 +142,73 @@ function scoreParty(p){
 }
 
 function results(){
-  show("results");
-  const answered=questions.filter((q,i)=>chosen[i]!==undefined).length;
-  $("resultStats").innerHTML=`<div class="section-card"><b>${answered} / ${questions.length}</b><span>beantwortete Thesen</span></div><div class="section-card"><b>${new Set(questions.map(q=>q.topic)).size}</b><span>Themenbereiche</span></div><div class="section-card"><b>${questions.length-answered}</b><span>noch offen</span></div>`;
+   show("results");
+   const answered=questions.filter((q,i)=>chosen[i]!==undefined).length;
+   $("resultStats").innerHTML=`<div class="section-card"><b>${answered} / ${questions.length}</b><span>beantwortete Thesen</span></div><div class="section-card"><b>${new Set(questions.map(q=>q.topic)).size}</b><span>Themenbereiche</span></div><div class="section-card"><b>${questions.length-answered}</b><span>noch offen</span></div>`;
 
-  $("answerPercentages").innerHTML="";
-  answers.forEach(a=>{
-    const count=questions.reduce((n,q,i)=>n+(chosen[i]===a?1:0),0);
-    const pct=answered?Math.round(count/answered*100):0;
-    const card=document.createElement("div");card.className="percent-card";
-    const head=document.createElement("div");head.className="percent-head";
-    const label=document.createElement("span");label.textContent=a;
-    const value=document.createElement("span");value.textContent=pct+"%";
-    head.append(label,value);
-    const bar=document.createElement("div");bar.className="bar";
-    const fill=document.createElement("div");fill.className="bar-fill";fill.style.width=pct+"%";bar.appendChild(fill);
-    const small=document.createElement("p");small.className="small";small.style.marginBottom="0";small.textContent=count+" Antwort(en)";
-    card.append(head,bar,small);$("answerPercentages").appendChild(card);
-  });
+   const ranked=partyData.map(p=>({...p,...scoreParty(p)})).sort((a,b)=>{
+     if(a.score===null)return 1;
+     if(b.score===null)return -1;
+     return b.score-a.score;
+   });
 
-  const ranked=partyData.map(p=>({...p,...scoreParty(p)})).sort((a,b)=>{
-    if(a.score===null)return 1;if(b.score===null)return -1;return b.score-a.score;
-  });
-  $("partyMatches").innerHTML="";
-  ranked.forEach(p=>{
-    const card=document.createElement("div");card.className="match-card";
-    const head=document.createElement("div");head.className="match-head";
-    const name=document.createElement("span");name.textContent=p.name;
-    const value=document.createElement("strong");value.textContent=p.score===null?"—":p.score+"%";
-    head.append(name,value);card.appendChild(head);
-    const sub=document.createElement("div");sub.className="match-sub";
-    sub.textContent=p.count?`${p.count} von ${answered} beantworteten Thesen gewertet`:"Noch keine ausreichend belegten Positionen hinterlegt";
-    card.appendChild(sub);
-    if(p.count){const bar=document.createElement("div");bar.className="bar";const fill=document.createElement("div");fill.className="bar-fill";fill.style.width=p.score+"%";bar.appendChild(fill);card.appendChild(bar);}
-    $("partyMatches").appendChild(card);
-  });
+   $("partyMatches").innerHTML="";
+   ranked.forEach((p,i)=>{
+     const card=document.createElement("div");
+     card.className="match-card";
+     const head=document.createElement("div");
+     head.className="match-head";
+     const name=document.createElement("span");
+     name.textContent=(p.score===null?"":(i+1)+". ")+p.name;
+     const value=document.createElement("strong");
+     value.textContent=p.score===null?"—":p.score+"%";
+     head.append(name,value);
+     card.appendChild(head);
 
-  $("partyLinks").innerHTML="";
-  partyData.forEach(p=>{
-    const a=document.createElement("a");a.className="party-link";a.href=p.url;a.target="_blank";a.rel="noopener noreferrer";
-    a.appendChild(document.createTextNode(p.name));
-    const span=document.createElement("span");span.textContent=p.label+" ↗";a.appendChild(span);
-    $("partyLinks").appendChild(a);
-  });
+     const sub=document.createElement("div");
+     sub.className="match-sub";
+     sub.textContent=p.count
+       ? `${p.count} von ${answered} beantworteten Thesen verglichen`
+       : "Keine ausreichend belegten Parteipositionen für einen Prozentwert vorhanden";
+     card.appendChild(sub);
 
-  $("summary").innerHTML="";
-  questions.forEach((q,i)=>{const d=document.createElement("div");d.className="summary-item";const b=document.createElement("b");b.textContent=`${i+1}. ${q.q}`;const s=document.createElement("span");s.textContent=chosen[i]||"Nicht beantwortet";d.append(b,s);$("summary").appendChild(d);});
+     if(p.count){
+       const bar=document.createElement("div");
+       bar.className="bar";
+       const fill=document.createElement("div");
+       fill.className="bar-fill";
+       fill.style.width=p.score+"%";
+       bar.appendChild(fill);
+       card.appendChild(bar);
+     }
+     $("partyMatches").appendChild(card);
+   });
+
+   $("partyLinks").innerHTML="";
+   partyData.forEach(p=>{
+     const a=document.createElement("a");
+     a.className="party-link";
+     a.href=p.url;
+     a.target="_blank";
+     a.rel="noopener noreferrer";
+     a.appendChild(document.createTextNode(p.name));
+     const span=document.createElement("span");
+     span.textContent=p.label+" ↗";
+     a.appendChild(span);
+     $("partyLinks").appendChild(a);
+   });
+
+   $("summary").innerHTML="";
+   questions.forEach((q,i)=>{
+     const d=document.createElement("div");
+     d.className="summary-item";
+     const b=document.createElement("b");
+     b.textContent=`${i+1}. ${q.q}`;
+     const s=document.createElement("span");
+     s.textContent=chosen[i]||"Nicht beantwortet";
+     d.append(b,s);
+     $("summary").appendChild(d);
+   });
 }
 $("startBtn").onclick=start;$("prevBtn").onclick=()=>{if(index>0){index--;render();}};$("nextBtn").onclick=()=>{if(!chosen[index])return;if(index<questions.length-1){index++;render();}else results();};
 $("restartBtn").onclick=()=>{index=0;show("quiz");render();};$("reviewBtn").onclick=()=>{index=0;show("quiz");render();};$("printBtn").onclick=()=>window.print();
